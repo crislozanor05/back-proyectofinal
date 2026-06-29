@@ -2,8 +2,15 @@ require("dotenv").config();
 
 const express = require("express");
 const { conectarDB } = require("./db");
+const cors = require("cors")
+
+const usuariosRouter = require("./routes/usuarios");
+const resenasRouter = require("./routes/resenas");
+const comentariosRouter = require("./routes/comentarios");
 
 const app = express();
+
+
 
 app.get("/", function (req, res) {
   res.send({ mensaje: "API de Tracklist funcionando" });
