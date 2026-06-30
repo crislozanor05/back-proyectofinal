@@ -1,6 +1,6 @@
 const express = require("express");
 const { obtenerDB } = require("../db");
-const requiereLogin = require("../middlewares/requiereLogin");
+const requiereLogin = require("../middleware/requiereLogin");
 
 const router = express.Router();
 
