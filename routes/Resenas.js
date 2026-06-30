@@ -43,7 +43,7 @@ router.get("/:id", async function (req, res) {
 });
 
 // POST /resenas
-// Crear una reseña nueva. Requiere estar logueado.
+// Crear una reseña nueva. Requiere estar registrado.
 router.post("/", requiereLogin, async function (req, res) {
   try {
     let cancion = req.body.cancion;
