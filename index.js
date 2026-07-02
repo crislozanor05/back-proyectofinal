@@ -7,7 +7,7 @@ const dns = require("dns")
 
 const express = require("express");
 const cors = require("cors");
-const { conectarDB } = require("./db");
+const  conectarDB  = require("./db.js");
 
 
 
@@ -35,7 +35,7 @@ app.get("/", function (req, res) {
 // --- Arranque: primero conectamos a la base de datos, luego abrimos el servidor ---
 async function start() {
   try {
-    await conectarDB();
+    await conectarDB(app);
     app.listen(process.env.PORT || 3000);
     console.log("Servidor escuchando en el puerto " + (process.env.PORT || 3000));
   } catch (err) {
