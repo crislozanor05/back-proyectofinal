@@ -1,15 +1,21 @@
 require("dotenv").config();
 
+const dns = require("dns")
+
+
+
 const express = require("express");
 const cors = require("cors");
 const { conectarDB } = require("./db");
+
+
 
 const usuariosRouter = require("./routes/usuarios");
 const resenasRouter = require("./routes/resenas");
 const comentariosRouter = require("./routes/comentarios");
 
 const app = express();
-
+dns.setServers(["1.1.1.1", "1.0.0.1"]);
 
 app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use(express.json());

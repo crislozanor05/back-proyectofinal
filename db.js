@@ -3,8 +3,9 @@ const { MongoClient } = require("mongodb");
 let db = null;
  
 // Conecta a MongoDB y guarda la base de datos en la variable db.
-async function conectarDB() {
+async function conectarDB() { console.log("funcion conectar")
   try {
+    console.log(process.env.MONGO_URI)
     const client = new MongoClient(process.env.MONGO_URI);
     await client.connect();
     db = client.db(process.env.DB_NAME);
