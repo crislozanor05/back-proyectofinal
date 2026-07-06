@@ -1,14 +1,12 @@
 const express = require("express");
-const { obtenerDB } = require("../db");
-const requiereLogin = require("../middlewares/requiereLogin");
+const { ObjectId } = require("mongodb");
 
 const router = express.Router();
 
 // GET /comentarios/:resenaId
-// Comentarios de una reseña concreta, ordenados del mas antiguo al mas nuevo
 router.get("/:resenaId", async function (req, res) {
   try {
-    let db = obtenerDB();
+    let db = req.app.locals.db;
     let comentarios = await db
       .collection("comentarios")
       .find({ resenaId: req.params.resenaId })
@@ -22,9 +20,15 @@ router.get("/:resenaId", async function (req, res) {
 });
 
 // POST /comentarios
-// Crear un comentario nuevo. Requiere estar logueado.
-router.post("/", requiereLogin, async function (req, res) {
+router.post("/", async function (req, res) {
   try {
+    let userId = req.headers["x-user-id"];
+
+    if (!userId) {
+      res.status(401).send({ mensaje: "No has iniciado sesión" });
+      return;
+    }
+
     let resenaId = req.body.resenaId;
     let texto = req.body.texto;
 
@@ -33,12 +37,20 @@ router.post("/", requiereLogin, async function (req, res) {
       return;
     }
 
-    let db = obtenerDB();
+    let db = req.app.locals.db;
+
+    // Buscamos el usuario para obtener su username
+    let usuario = await db.collection("usuarios").findOne({ _id: new ObjectId(userId) });
+
+    if (usuario === null) {
+      res.status(401).send({ mensaje: "Usuario no válido" });
+      return;
+    }
 
     let nuevoComentario = {
       resenaId: resenaId,
-      usuarioId: req.usuario._id.toString(),
-      nombreUsuario: req.usuario.username,
+      usuarioId: userId,
+      nombreUsuario: usuario.username,
       texto: texto,
       fecha: new Date(),
     };
