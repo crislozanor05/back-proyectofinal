@@ -12,8 +12,8 @@ const  conectarDB  = require("./db.js");
 
 
 const usuariosRouter = require("./routes/usuarios.js");
-// const resenasRouter = require("./routes/resenas");
-// const comentariosRouter = require("./routes/comentarios");
+const resenasRouter = require("./routes/resenas");
+const comentariosRouter = require("./routes/comentarios");
 
 const app = express();
 dns.setServers(["1.1.1.1", "1.0.0.1"]);
@@ -24,8 +24,8 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use("/usuarios", usuariosRouter);
-// app.use("/resenas", resenasRouter);
-// app.use("/comentarios", comentariosRouter);
+app.use("/resenas", resenasRouter);
+app.use("/comentarios", comentariosRouter);
 
 // Ruta de comprobación rápida de que la API está viva
 app.get("/", function (req, res) {
