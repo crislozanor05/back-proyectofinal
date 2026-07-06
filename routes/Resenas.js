@@ -1,15 +1,12 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
-const { obtenerDB } = require("../db");
-const requiereLogin = require("../middlewares/requiereLogin");
 
 const router = express.Router();
 
 // GET /resenas
-// Devuelve el feed completo, mas recientes primero
 router.get("/", async function (req, res) {
   try {
-    let db = obtenerDB();
+    let db = req.app.locals.db;
     let resenas = await db
       .collection("resenas")
       .find()
@@ -23,10 +20,9 @@ router.get("/", async function (req, res) {
 });
 
 // GET /resenas/:id
-// Devuelve el detalle de una reseña concreta
 router.get("/:id", async function (req, res) {
   try {
-    let db = obtenerDB();
+    let db = req.app.locals.db;
     let resena = await db
       .collection("resenas")
       .findOne({ _id: new ObjectId(req.params.id) });
@@ -43,9 +39,15 @@ router.get("/:id", async function (req, res) {
 });
 
 // POST /resenas
-// Crear una reseña nueva. Requiere estar registrado.
-router.post("/", requiereLogin, async function (req, res) {
+router.post("/", async function (req, res) {
   try {
+    let userId = req.headers["x-user-id"];
+
+    if (!userId) {
+      res.status(401).send({ mensaje: "No has iniciado sesión" });
+      return;
+    }
+
     let cancion = req.body.cancion;
     let artista = req.body.artista;
     let nota = Number(req.body.nota);
@@ -61,11 +63,19 @@ router.post("/", requiereLogin, async function (req, res) {
       return;
     }
 
-    let db = obtenerDB();
+    let db = req.app.locals.db;
+
+    // Buscamos el usuario para obtener su username
+    let usuario = await db.collection("usuarios").findOne({ _id: new ObjectId(userId) });
+
+    if (usuario === null) {
+      res.status(401).send({ mensaje: "Usuario no válido" });
+      return;
+    }
 
     let nuevaResena = {
-      usuarioId: req.usuario._id.toString(),
-      nombreUsuario: req.usuario.username,
+      usuarioId: userId,
+      nombreUsuario: usuario.username,
       cancion: cancion,
       artista: artista,
       nota: nota,
@@ -82,10 +92,16 @@ router.post("/", requiereLogin, async function (req, res) {
 });
 
 // DELETE /resenas/:id
-// Solo el autor de la reseña puede borrarla
-router.delete("/:id", requiereLogin, async function (req, res) {
+router.delete("/:id", async function (req, res) {
   try {
-    let db = obtenerDB();
+    let userId = req.headers["x-user-id"];
+
+    if (!userId) {
+      res.status(401).send({ mensaje: "No has iniciado sesión" });
+      return;
+    }
+
+    let db = req.app.locals.db;
     let resena = await db
       .collection("resenas")
       .findOne({ _id: new ObjectId(req.params.id) });
@@ -95,7 +111,7 @@ router.delete("/:id", requiereLogin, async function (req, res) {
       return;
     }
 
-    if (resena.usuarioId !== req.usuario._id.toString()) {
+    if (resena.usuarioId !== userId) {
       res.status(403).send({ mensaje: "No puedes borrar la reseña de otro usuario" });
       return;
     }
