@@ -36,8 +36,8 @@ app.get("/", function (req, res) {
 async function start() {
   try {
     await conectarDB(app);
-    app.listen(process.env.PORT || 3000);
-    console.log("Servidor escuchando en el puerto " + (process.env.PORT || 3000));
+    app.listen(process.env.PORT || 3001);
+    console.log("Servidor escuchando en el puerto " + (process.env.PORT || 3001));
   } catch (err) {
     console.error("No se ha podido iniciar el servidor:", err);
   }
