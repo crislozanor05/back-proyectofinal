@@ -1,7 +1,7 @@
 const { ObjectId } = require("mongodb");
 const { obtenerDB } = require("../db");
 
-// Middleware de autenticacion simple (sin JWT, para mantenerlo dentro de lo visto en clase).
+
 // El frontend debe enviar el id del usuario logueado en la cabecera "x-user-id".
 // Si el id no existe o no corresponde a un usuario real, se rechaza la peticion.
 async function requiereLogin(req, res, next) {
