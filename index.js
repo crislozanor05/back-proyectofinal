@@ -32,7 +32,7 @@ app.get("/", function (req, res) {
   res.send({ mensaje: "API de Tracklist funcionando" });
 });
 
-// --- Arranque: primero conectamos a la base de datos, luego abrimos el servidor ---
+//Arranque: primero conectamos a la base de datos, luego abrimos el servidor
 async function start() {
   try {
     await conectarDB(app);
