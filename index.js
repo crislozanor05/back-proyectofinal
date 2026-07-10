@@ -27,7 +27,7 @@ app.use("/usuarios", usuariosRouter);
 app.use("/resenas", resenasRouter);
 app.use("/comentarios", comentariosRouter);
 
-// Ruta de comprobación rápida de que la API está viva
+
 app.get("/", function (req, res) {
   res.send({ mensaje: "API de Tracklist funcionando" });
 });
