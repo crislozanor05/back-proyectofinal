@@ -63,4 +63,37 @@ router.post("/", async function (req, res) {
   }
 });
 
+// DELETE /comentarios/:id
+router.delete("/:id", async function (req, res) {
+  try {
+    let userId = req.headers["x-user-id"];
+
+    if (!userId) {
+      res.status(401).send({ mensaje: "No has iniciado sesión" });
+      return;
+    }
+
+    let db = req.app.locals.db;
+    let comentario = await db
+      .collection("comentarios")
+      .findOne({ _id: new ObjectId(req.params.id) });
+
+    if (comentario === null) {
+      res.status(404).send({ mensaje: "Comentario no encontrado" });
+      return;
+    }
+
+    if (comentario.usuarioId !== userId) {
+      res.status(403).send({ mensaje: "No puedes borrar el comentario de otro usuario" });
+      return;
+    }
+
+    await db.collection("comentarios").deleteOne({ _id: new ObjectId(req.params.id) });
+
+    res.send({ mensaje: "Comentario eliminado correctamente" });
+  } catch (err) {
+    res.status(500).send({ mensaje: "Error al eliminar el comentario: " + err });
+  }
+});
+
 module.exports = router;
