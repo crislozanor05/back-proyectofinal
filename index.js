@@ -1,6 +1,9 @@
 // require("dotenv").config();
-import { dotenv } from "dotenv";
+import dotenv  from "dotenv";
+import dns from "dns";
 
+
+dns.setServers(["8.8.8.8", "8.8.4.4"])
 
 
 
@@ -8,24 +11,24 @@ import { dotenv } from "dotenv";
 
 
 // const express = require("express");
-import {express} from "express";
+import express from "express";
 // const cors = require("cors");
-import {cors} from "cors";
+import cors from "cors";
 // const  conectarDB  = require("./db.js");
-import {conectarDB} from "./db.js";
+import conectarDB from "./db.js";
 
 dotenv.config()
 
 
 // const usuariosRouter = require("./routes/usuarios.js");
-import {usuariosRouter} from "./routes/usuarios.js";
+import usuariosRouter from "./routes/usuarios.js";
 // const resenasRouter = require("./routes/resenas");
-import {resenasRouter} from "./routes/resenas";
+import resenasRouter from "./routes/resenas.js";
 // const comentariosRouter = require("./routes/comentarios");
-import {comentariosRouter} from "./routes/comentarios";
+import comentariosRouter from "./routes/comentarios.js";
 
-// const app = express();
-import {app} from express;
+const app = express();
+
 
 
 app.use(cors({ origin: process.env.FRONTEND_URL }));

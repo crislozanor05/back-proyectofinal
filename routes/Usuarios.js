@@ -1,11 +1,12 @@
 // const express = require("express");
-import {express} from "express";
+import express from "express";
 // const bcrypt = require("bcrypt");
-import {bcrypt} from "bcrypt";
+import bcrypt from "bcrypt";
 // const { ObjectId } = require("mongodb");
 import { ObjectId } from "mongodb";
 
 const router = express.Router();
+
 
 const LONGITUD_MINIMA_PASSWORD = 8;
 
@@ -116,5 +117,5 @@ router.delete("/:id", async function (req, res) {
   }
 });
 
-module.exports = router;
+export default router;
 

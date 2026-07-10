@@ -1,4 +1,5 @@
-const { MongoClient } = require("mongodb");
+// const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
  
 let db = null;
  
@@ -23,4 +24,4 @@ async function conectarDB(app) { console.log("funcion conectar")
 //   return db;
 // }
  
-module.exports =  conectarDB ;
+export default  conectarDB ;
