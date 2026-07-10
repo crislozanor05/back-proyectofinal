@@ -1,5 +1,7 @@
-const { ObjectId } = require("mongodb");
-const { obtenerDB } = require("../db");
+// const { ObjectId } = require("mongodb");
+import { ObjectId } from "mongodb";
+// const { obtenerDB } = require("../db");
+import {obtenerDB} from "../db";
 
 
 // El frontend debe enviar el id del usuario logueado en la cabecera "x-user-id".

@@ -1,7 +1,10 @@
-const express = require("express");
-const { ObjectId } = require("mongodb");
+//const express = require("express");
+import {express} from "express";
+// const { ObjectId } = require("mongodb");
+import { ObjectId } from "mongodb";
 
 const router = express.Router();
+
 
 // GET /comentarios/:resenaId
 router.get("/:resenaId", async function (req, res) {

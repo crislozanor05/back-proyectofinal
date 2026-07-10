@@ -1,21 +1,31 @@
-require("dotenv").config();
+// require("dotenv").config();
+import { dotenv } from "dotenv";
 
 
 
 
 
 
-const express = require("express");
-const cors = require("cors");
-const  conectarDB  = require("./db.js");
+
+// const express = require("express");
+import {express} from "express";
+// const cors = require("cors");
+import {cors} from "cors";
+// const  conectarDB  = require("./db.js");
+import {conectarDB} from "./db.js";
+
+dotenv.config()
 
 
+// const usuariosRouter = require("./routes/usuarios.js");
+import {usuariosRouter} from "./routes/usuarios.js";
+// const resenasRouter = require("./routes/resenas");
+import {resenasRouter} from "./routes/resenas";
+// const comentariosRouter = require("./routes/comentarios");
+import {comentariosRouter} from "./routes/comentarios";
 
-const usuariosRouter = require("./routes/usuarios.js");
-const resenasRouter = require("./routes/resenas");
-const comentariosRouter = require("./routes/comentarios");
-
-const app = express();
+// const app = express();
+import {app} from express;
 
 
 app.use(cors({ origin: process.env.FRONTEND_URL }));

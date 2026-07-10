@@ -1,6 +1,9 @@
-const express = require("express");
-const bcrypt = require("bcrypt");
-const { ObjectId } = require("mongodb");
+// const express = require("express");
+import {express} from "express";
+// const bcrypt = require("bcrypt");
+import {bcrypt} from "bcrypt";
+// const { ObjectId } = require("mongodb");
+import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
