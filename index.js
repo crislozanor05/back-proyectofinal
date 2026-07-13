@@ -1,9 +1,9 @@
 // require("dotenv").config();
 import dotenv  from "dotenv";
-import dns from "dns";
+// import dns from "dns";
 
 
-dns.setServers(["8.8.8.8", "8.8.4.4"])
+// dns.setServers(["8.8.8.8", "8.8.4.4"])
 
 
 
