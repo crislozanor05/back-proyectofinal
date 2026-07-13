@@ -117,6 +117,52 @@ router.delete("/:id", async function (req, res) {
   }
 });
 
+// PUT /usuarios/:id
+// Actualizar el nombre de usuario
+router.put("/:id", async function (req, res) {
+  try {
+    let userId = req.headers["x-user-id"];
+
+    if (!userId) {
+      res.status(401).send({ mensaje: "No has iniciado sesión" });
+      return;
+    }
+
+    if (userId !== req.params.id) {
+      res.status(403).send({ mensaje: "No puedes editar la cuenta de otro usuario" });
+      return;
+    }
+
+    let nuevoUsername = req.body.username;
+
+    if (!nuevoUsername || nuevoUsername.trim() === "") {
+      res.status(400).send({ mensaje: "El nombre de usuario no puede estar vacío" });
+      return;
+    }
+
+    let db = req.app.locals.db;
+
+    // Comprobamos que el nuevo nombre no lo tenga ya otro usuario
+    let usuarioExistente = await db.collection("usuarios").findOne({ username: nuevoUsername });
+
+    if (usuarioExistente !== null) {
+      res.status(409).send({ mensaje: "Ese nombre de usuario ya está en uso" });
+      return;
+    }
+
+    await db.collection("usuarios").updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { username: nuevoUsername } }
+    );
+
+    res.send({
+      mensaje: "Nombre de usuario actualizado correctamente",
+      usuario: { _id: userId, username: nuevoUsername }
+    });
+  } catch (err) {
+    res.status(500).send({ mensaje: "Error al actualizar el usuario: " + err });
+  }
+});
 
 
 export default router;
