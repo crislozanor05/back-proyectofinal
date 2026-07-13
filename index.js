@@ -1,9 +1,9 @@
 // require("dotenv").config();
 import dotenv  from "dotenv";
-// import dns from "dns";
+import dns from "dns";
 
 
-// dns.setServers(["8.8.8.8", "8.8.4.4"])
+dns.setServers(["8.8.8.8", "8.8.4.4"])
 
 
 
@@ -21,11 +21,11 @@ dotenv.config()
 
 
 // const usuariosRouter = require("./routes/usuarios.js");
-import usuariosRouter from "./routes/usuarios.js";
+import usuariosRouter from "./routes/Usuarios.js";
 // const resenasRouter = require("./routes/resenas");
-import resenasRouter from "./routes/resenas.js";
+import resenasRouter from "./routes/Resenas.js";
 // const comentariosRouter = require("./routes/comentarios");
-import comentariosRouter from "./routes/comentarios.js";
+import comentariosRouter from "./routes/Comentarios.js";
 
 const app = express();
 
@@ -42,7 +42,7 @@ app.use("/comentarios", comentariosRouter);
 
 
 app.get("/", function (req, res) {
-  res.send({ mensaje: "API de Tracklist funcionando" });
+  res.send({ mensaje: "API funcionando" });
 });
 
 //Arranque: primero conectamos a la base de datos, luego abrimos el servidor
