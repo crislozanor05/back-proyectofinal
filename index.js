@@ -47,17 +47,6 @@ app.get("/", function (req, res) {
 
 await conectarDB(app);
 app.listen(process.env.PORT || 3001);
-//Arranque: primero conectamos a la base de datos, luego abrimos el servidor
-// async function start() {
-//   try {
-//     // await conectarDB(app);
-//     app.listen(process.env.PORT || 3001);
-//     // console.log("Servidor escuchando en el puerto " + (process.env.PORT || 3001));
-//   } catch (err) {
-//     console.error("No se ha podido iniciar el servidor:", err);
-//   }
-// }
 
-// start();
 
 export default app 

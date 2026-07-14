@@ -1,7 +1,7 @@
 // const { MongoClient } = require("mongodb");
 import { MongoClient } from "mongodb";
  
-// let db = null;
+
  
 // Conecta a MongoDB y guarda la base de datos en la variable db.
 async function conectarDB(app) { console.log("funcion conectar")
@@ -18,10 +18,6 @@ async function conectarDB(app) { console.log("funcion conectar")
   }
 }
  
-// Permite que otros archivos (como las rutas) accedan a la base de datos
-// una vez ya se ha conectado.
-// function obtenerDB() {
-//   return db;
-// }
+
  
 export default  conectarDB ;
