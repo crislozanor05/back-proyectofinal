@@ -26,6 +26,7 @@ import usuariosRouter from "./routes/Usuarios.js";
 import resenasRouter from "./routes/Resenas.js";
 // const comentariosRouter = require("./routes/comentarios");
 import comentariosRouter from "./routes/Comentarios.js";
+import buscadorRouter from "./routes/Buscador.js";
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/usuarios", usuariosRouter);
 app.use("/resenas", resenasRouter);
 app.use("/comentarios", comentariosRouter);
+app.use("/buscador", buscadorRouter);
 
 
 app.get("/", function (req, res) {

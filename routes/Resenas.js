@@ -55,6 +55,9 @@ router.post("/", async function (req, res) {
     let nota = Number(req.body.nota);
     let texto = req.body.texto;
 
+    let deezerId = req.body.deezerId || null;
+    let portada = req.body.portada || "";
+
     if (!cancion || !artista) {
       res.status(400).send({ mensaje: "La canción y el artista son obligatorios" });
       return;
@@ -82,6 +85,8 @@ router.post("/", async function (req, res) {
       artista: artista,
       nota: nota,
       texto: texto || "",
+      deezerId: deezerId, 
+      portada: portada,
       fecha: new Date(),
     };
 
