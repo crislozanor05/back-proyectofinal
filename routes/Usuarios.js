@@ -28,7 +28,7 @@ router.post("/registro", async function (req, res) {
       return;
     }
 
-    let db = await conectarDB();
+    let db = req.app.locals.db;
 
     let usuarioExistente = await db.collection("usuarios").findOne({ username: username });
 
@@ -60,7 +60,7 @@ router.post("/login", async function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
-    let db = await conectarDB();
+    let db = req.app.locals.db;
     let usuario = await db.collection("usuarios").findOne({ username: username });
 
     if (usuario === null) {
@@ -99,7 +99,7 @@ router.delete("/:id", async function (req, res) {
       return;
     }
 
-    let db = await conectarDB();
+    let db = req.app.locals.db;
 
     let resultado = await db.collection("usuarios").deleteOne({ _id: new ObjectId(userId) });
 

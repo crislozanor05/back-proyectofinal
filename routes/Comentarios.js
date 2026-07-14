@@ -40,7 +40,7 @@ router.post("/", async function (req, res) {
       return;
     }
 
-    let db = await conectarDB();
+    let db = req.app.locals.db;
 
     // Buscamos el usuario para obtener su username
     let usuario = await db.collection("usuarios").findOne({ _id: new ObjectId(userId) });
@@ -76,7 +76,7 @@ router.delete("/:id", async function (req, res) {
       return;
     }
 
-    let db = await conectarDB();
+    let db = req.app.locals.db;
     let comentario = await db
       .collection("comentarios")
       .findOne({ _id: new ObjectId(req.params.id) });

@@ -47,9 +47,8 @@ app.get("/", function (req, res) {
   res.send({ mensaje: "API funcionando" });
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Servidor listo");
-});
+await conectarDB(app);
+app.listen(process.env.PORT || 3001);
 
 
 export default app 
