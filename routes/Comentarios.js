@@ -9,7 +9,7 @@ const router = express.Router();
 // GET /comentarios/:resenaId
 router.get("/:resenaId", async function (req, res) {
   try {
-    let db = await conectarDB();
+    let db = req.app.locals.db;
     let comentarios = await db
       .collection("comentarios")
       .find({ resenaId: req.params.resenaId })

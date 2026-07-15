@@ -15,7 +15,7 @@ import express from "express";
 // const cors = require("cors");
 import cors from "cors";
 // const  conectarDB  = require("./db.js");
-import conectarDB from "./db.js";
+import conectarDB from "./db.js"
 
 dotenv.config()
 
