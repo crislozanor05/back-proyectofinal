@@ -88,6 +88,7 @@ router.post("/", async function (req, res) {
       deezerId: deezerId, 
       portada: portada,
       fecha: new Date(),
+      likes: []
     };
 
     let resultado = await db.collection("resenas").insertOne(nuevaResena);
@@ -129,6 +130,54 @@ router.delete("/:id", async function (req, res) {
     res.send({ mensaje: "Reseña eliminada correctamente" });
   } catch (err) {
     res.status(500).send({ mensaje: "Error al eliminar la reseña: " + err });
+  }
+});
+
+// PUT /resenas/:id/like
+router.put("/:id/like", async function (req, res) {
+  try {
+    let userId = req.headers["x-user-id"];
+
+    if (!userId) {
+      res.status(401).send({ mensaje: "No has iniciado sesión" });
+      return;
+    }
+
+    let db = req.app.locals.db;
+    let resenaId = req.params.id;
+
+    // Buscamos la reseña
+    let resena = await db.collection("resenas").findOne({ _id: new ObjectId(resenaId) });
+
+    if (!resena) {
+      res.status(404).send({ mensaje: "Reseña no encontrada" });
+      return;
+    }
+
+    // Inicializamos el array de likes si por algún motivo no existiera en reseñas antiguas
+    let likes = resena.likes || [];
+    let queryAccion;
+
+    if (likes.includes(userId)) {
+      // Si el usuario ya le dio like, se lo quitamos ($pull)
+      queryAccion = { $pull: { likes: userId } };
+    } else {
+      // Si no le ha dado, se lo añadimos ($addToSet evita duplicados)
+      queryAccion = { $addToSet: { likes: userId } };
+    }
+
+    // Actualizamos en la base de datos
+    await db.collection("resenas").updateOne(
+      { _id: new ObjectId(resenaId) },
+      queryAccion
+    );
+
+    // Buscamos la reseña actualizada para devolver los nuevos likes al frontend
+    let resenaActualizada = await db.collection("resenas").findOne({ _id: new ObjectId(resenaId) });
+
+    res.send({ likes: resenaActualizada.likes || [] });
+  } catch (err) {
+    res.status(500).send({ mensaje: "Error al procesar el like: " + err });
   }
 });
 
